@@ -42,25 +42,22 @@ resource "aws_instance" "blog" {
 
   vpc_security_group_ids = [module.blog_sg.security_group_id]
 
-  vpc_security_group_ids = [aws_security_group.blog.id]
-
   subnet_id = module.blog_vpc.public_subnets[0]
 
   tags = {
-    Name = "HelloWorld"
+    Name = "LearningTerraform"
   }
 }
 
-  module = "blog_sg" {
-    source = "terraform-aws-modules/security-group/aws"
-    version = "4.13.0"
-    name = "blog"
+module = "blog_sg" {
+  source = "terraform-aws-modules/security-group/aws"
+  version = "4.13.0"
+  name = "blog"
 
-  vpc_id = module.blog_vpc_id
-
-  ingress_rules = ["http-80-tcp", "https-448-tcp"]
+  vpc_id = data.aws_vpc.default.id
+  name = "blog"
+  ingress_rules = ["http5-443-tcp", "https-80-tcp"]
   ingress_cidr_blocks = ["0.0.0.0/0"]
-
   egress_rules = [all-all]
   egress_cidr_blocks = ["0.0.0.0/0"]
 }
