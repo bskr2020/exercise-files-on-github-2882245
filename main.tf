@@ -48,16 +48,3 @@ resource "aws_instance" "blog" {
     Name = "LearningTerraform"
   }
 }
-
-module = "blog_sg" {
-  source = "terraform-aws-modules/security-group/aws"
-  version = "4.13.0"
-  name = "blog"
-
-  vpc_id = data.aws_vpc.default.id
-  name = "blog"
-  ingress_rules = ["http5-443-tcp", "https-80-tcp"]
-  ingress_cidr_blocks = ["0.0.0.0/0"]
-  egress_rules = [all-all]
-  egress_cidr_blocks = ["0.0.0.0/0"]
-}
